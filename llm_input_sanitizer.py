@@ -11,7 +11,7 @@ def sanitize_input(raw_text: str) -> str:
     normalized_text = unicodedata.normalize("NFKC", text_only)
     zero_width_pattern = r'[\u200B-\u200D\uFEFF]'
     no_zw_chars = re.sub(zero_width_pattern, '', normalized_text)
-    base64_pattern = r'\b(?:[A-Za-z0-9+/]{4}){10,}(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?\b'
+    base64_pattern = r'\b[A-Za-z0-9+/]{24,}={0,2}\b'
     no_base64 = re.sub(base64_pattern, '[REDACTED_ENCODED_BLOB]', no_zw_chars)
     injection_keywords = [
         r'ignore all previous instructions',
